@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Todo } from "./todo.entity";
 import { TodosService } from "./todos.service";
@@ -33,16 +33,27 @@ export class TodosController {
         return await this.todosService.findById(id);
     }
 
-    @Post('create')
+    @Post('creteOrUpdate')
     @ApiOperation({
-        summary: 'Create todo',
-        description: 'Create todo',
-        operationId: 'createTodo'
+        summary: 'Create or update todo',
+        description: 'Create or update todo',
+        operationId: 'creteOrUpdate'
     })
     @ApiOkResponse({ description: 'Todo created', type: Todo })
-    // async create(@Body() title: Todo): Promise<Todo> {
-    async create(@Body() todo: Todo) {
+    async creteOrUpdate(@Body() todo: Todo) {
         console.log("🚀 ~ file: todos.controller.ts:44 ~ TodosController ~ create ~ title", todo)        
-        return await this.todosService.create(todo);
+        return await this.todosService.createOrUpdate(todo);
     }
+
+    @Delete(':id')
+    @ApiOperation({
+        summary: 'Delete todo by id',
+        description: 'Delete todo by id',
+        operationId: 'deleteTodoById'
+    })
+    @ApiOkResponse({ description: 'Todo deleted' })
+    @ApiNotFoundResponse({ description: 'Todo not found' })
+    async delete(@Param('id') id: number) {
+        return await this.todosService.delete(id);
+    }   
 }

@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { Todo } from './todo.entity';
 
 export class TodosService {
@@ -20,8 +20,12 @@ export class TodosService {
     });
   }
 
-  create(todo: Todo): Promise<Todo> {
+  createOrUpdate(todo: Todo): Promise<Todo> {
     console.log("🚀 ~ file: todos.service.ts:24 ~ TodosService ~ create ~ todo", todo)    
     return this.todosRepository.save(todo);
+  }
+
+  delete(id: number): Promise<DeleteResult> {
+    return this.todosRepository.delete(id);
   }
 }
