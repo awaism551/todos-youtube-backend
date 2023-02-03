@@ -11,4 +11,17 @@ export class TodosService {
   findAll(): Promise<Todo[]> {
     return this.todosRepository.find();
   }
+
+  findById(id: number): Promise<Todo> {
+    return this.todosRepository.findOne({
+      where: {
+        id
+      },
+    });
+  }
+
+  create(todo: Todo): Promise<Todo> {
+    console.log("🚀 ~ file: todos.service.ts:24 ~ TodosService ~ create ~ todo", todo)    
+    return this.todosRepository.save(todo);
+  }
 }
