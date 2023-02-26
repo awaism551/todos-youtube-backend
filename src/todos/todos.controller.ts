@@ -45,15 +45,15 @@ export class TodosController {
         return await this.todosService.createOrUpdate(todo);
     }
 
-    @Delete(':id')
+    @Delete('delete')
     @ApiOperation({
-        summary: 'Delete todo by id',
-        description: 'Delete todo by id',
-        operationId: 'deleteTodoById'
+        summary: 'Delete todo by ids',
+        description: 'Delete todo by ids',
+        operationId: 'deleteTodoByIds'
     })
-    @ApiOkResponse({ description: 'Todo deleted' })
+    @ApiOkResponse({ description: 'Todos deleted' })
     @ApiNotFoundResponse({ description: 'Todo not found' })
-    async delete(@Param('id') id: number) {
-        return await this.todosService.delete(id);
+    async delete(@Body() ids: number[]) {
+        return await this.todosService.delete(ids);
     }   
 }

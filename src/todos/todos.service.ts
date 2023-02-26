@@ -25,7 +25,7 @@ export class TodosService {
     return this.todosRepository.save(todo);
   }
 
-  delete(id: number): Promise<DeleteResult> {
-    return this.todosRepository.delete(id);
+  delete(ids: number[]): Promise<DeleteResult> {
+    return this.todosRepository.delete(ids);
   }
 }
